@@ -1,0 +1,2 @@
+const MAX_MOBILE_WIDTH = 550.0;
+const MAX_TABLET_WIDTH = 768.0;

@@ -1,0 +1,25 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-thomsonpassinternal-dev-90246-authRole",
+      "UnauthRoleArn": "arn:aws:iam::551253161854:role/amplify-thomsonpassinternal-dev-90246-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::551253161854:role/amplify-thomsonpassinternal-dev-90246-authRole",
+      "Region": "ap-southeast-1",
+      "DeploymentBucketName": "amplify-thomsonpassinternal-dev-90246-deployment",
+      "UnauthRoleName": "amplify-thomsonpassinternal-dev-90246-unauthRole",
+      "StackName": "amplify-thomsonpassinternal-dev-90246",
+      "StackId": "arn:aws:cloudformation:ap-southeast-1:551253161854:stack/amplify-thomsonpassinternal-dev-90246/c980fe20-6294-11ee-8bdc-02db3a2539a2",
+      "AmplifyAppId": "d3ihvyzxeiav80"
+    },
+    "categories": {
+      "auth": {
+        "thomsonpassinternal290dfffc": {
+          "userPoolId": "ap-southeast-1_Etd2uyb2R",
+          "userPoolName": "test-loginservice",
+          "webClientId": "28n3d7m30j9c5tik31dr23f2nh",
+          "nativeClientId": "28n3d7m30j9c5tik31dr23f2nh"
+        }
+      }
+    }
+  }
+}
