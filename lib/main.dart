@@ -3,7 +3,12 @@ import 'package:amplify_flutter/amplify_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/date_symbol_data_local.dart';
+import 'package:responsive_framework/breakpoint.dart';
+import 'package:responsive_framework/responsive_breakpoints.dart';
+import 'package:thomson_internal_login/screen_router.dart';
 import 'package:thomson_internal_login/screens/login_screen.dart';
+import 'package:thomson_internal_login/utilities/consts.dart';
+import 'package:thomson_internal_login/utilities/theme_data.dart';
 import 'package:url_strategy/url_strategy.dart';
 
 import 'amplifyconfiguration_mobile.dart' as MobileConfig;
@@ -47,16 +52,21 @@ Future<void> _configureAmplify() async {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
+    return MaterialApp.router(
+      builder: (context, child) => ResponsiveBreakpoints.builder(
+        child: child!,
+        breakpoints: [
+          const Breakpoint(start: 0, end: MAX_MOBILE_WIDTH, name: MOBILE),
+          const Breakpoint(
+              start: MAX_MOBILE_WIDTH, end: MAX_TABLET_WIDTH, name: TABLET),
+        ],
       ),
-      home: const LoginScreen(),
+      title: 'Internal Portal Login',
+      theme: lightTheme,
+      debugShowCheckedModeBanner: false,
+      routerConfig: appRoutes,
     );
   }
 }

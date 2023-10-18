@@ -2,7 +2,9 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:go_router/go_router.dart';
 import 'package:thomson_internal_login/controllers/login_controller.dart';
+import 'package:thomson_internal_login/screen_router.dart';
 import 'package:thomson_internal_login/widgets/button_widget.dart';
 
 class LoginButton extends StatelessWidget {
@@ -20,7 +22,7 @@ class LoginButton extends StatelessWidget {
         onPressed: () {
           controller.login().then((isSuccess) {
             if (isSuccess) {
-              print('Success!');
+              context.pushReplacement(Routes.SUCCESS);
             }
           });
         },
