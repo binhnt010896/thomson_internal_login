@@ -21,8 +21,8 @@ const amplifyconfig = '''{
                         "OAuth": {
                             "WebDomain": "tmctest-cogn-azure.auth.ap-southeast-1.amazoncognito.com",
                             "AppClientId": "28n3d7m30j9c5tik31dr23f2nh",
-                            "SignInRedirectURI": "https://thomson-internal-login-rtks.vercel.app/login/",
-                            "SignOutRedirectURI": "https://thomson-internal-login-rtks.vercel.app/login/",
+                            "SignInRedirectURI": "http://localhost:8000/login/",
+                            "SignOutRedirectURI": "http://localhost:8000/login/",
                             "ResponseType": "code",
                             "Scopes": [
                                 "email",

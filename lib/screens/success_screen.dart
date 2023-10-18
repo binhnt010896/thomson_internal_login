@@ -6,11 +6,15 @@ class SuccessScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return Scaffold(
       body: Center(
         child: Column(
           children: [
             Text('You\'re signed in!\nRedirecting to your app.\nDon\'t move a muscle! :)'),
+            InkWell(
+              onTap: () async => Amplify.Auth.signOut(),
+              child: Text('Sign out'),
+            )
           ],
         ),
       ),

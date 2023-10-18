@@ -30,4 +30,10 @@ GoRouter get appRoutes => GoRouter(
   ],
   errorBuilder: (context, state) => const NotFoundScreen(),
   initialLocation: Routes.LOGIN,
+  redirect: (context, state) {
+    if (state.pathParameters.containsKey('code')) {
+      return Routes.SUCCESS;
+    }
+    return null;
+  },
 );
