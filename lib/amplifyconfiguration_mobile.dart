@@ -23,7 +23,7 @@ const amplifyconfig = '''{
                             "AppClientId": "28n3d7m30j9c5tik31dr23f2nh",
                             "SignInRedirectURI": "https://thomson-internal-login-rtks.vercel.app/login/",
                             "SignOutRedirectURI": "https://thomson-internal-login-rtks.vercel.app/login/",
-                            "ResponseType": "code",
+                            "ResponseType": "token",
                             "Scopes": [
                                 "email",
                                 "openid",
