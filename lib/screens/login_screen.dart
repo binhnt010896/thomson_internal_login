@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:get/utils.dart';
 import 'package:thomson_internal_login/utilities/consts.dart';
 import 'package:thomson_internal_login/utilities/images.dart';
@@ -13,7 +14,6 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  final _loginForm = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -23,24 +23,21 @@ class _LoginScreenState extends State<LoginScreen> {
       Container(
         constraints: const BoxConstraints(maxWidth: 300),
         padding: EdgeInsets.symmetric(horizontal: isPCView ? context.width/8 : 0),
-        child: Form(
-          key: _loginForm,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: isPCView ? MainAxisAlignment.center : MainAxisAlignment.start,
-            children: [
-              if (isPCView)
-                Image.asset(
-                  AssetImages.fullLogo,
-                  width: 120,
-                ),
-              const SizedBox(height: 24),
-              Text('Thomson Employee Service Portal',
-                  style: TextStyles.headlineM, textAlign: isPCView ? TextAlign.start : TextAlign.center),
-              const SizedBox(height: 24),
-              const LoginButton()
-            ],
-          ),
+        child: Column(
+          crossAxisAlignment: isPCView ? CrossAxisAlignment.start : CrossAxisAlignment.center,
+          mainAxisAlignment: isPCView ? MainAxisAlignment.center : MainAxisAlignment.start,
+          children: [
+            if (isPCView)
+              Image.asset(
+                AssetImages.fullLogo,
+                width: 120,
+              ),
+            const SizedBox(height: 24),
+            Text('Thomson Employee\nService Portal',
+                style: TextStyles.headlineM, textAlign: isPCView ? TextAlign.start : TextAlign.center),
+            const SizedBox(height: 24),
+            const LoginButton()
+          ],
         ),
       )
     ];

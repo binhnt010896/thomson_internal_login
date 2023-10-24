@@ -1,4 +1,3 @@
-import 'package:amplify_flutter/amplify_flutter.dart';
 import 'package:flutter/material.dart';
 
 class SuccessScreen extends StatelessWidget {
@@ -6,17 +5,9 @@ class SuccessScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return const Scaffold(
       body: Center(
-        child: Column(
-          children: [
-            Text('You\'re signed in!\nRedirecting to your app.\nDon\'t move a muscle! :)'),
-            InkWell(
-              onTap: () async => Amplify.Auth.signOut(),
-              child: Text('Sign out'),
-            )
-          ],
-        ),
+        child: Text('You\'re signed in!\nRedirecting to your app'),
       ),
     );
   }

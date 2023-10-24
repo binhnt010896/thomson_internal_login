@@ -48,4 +48,27 @@ class LoginController extends GetxController {
     final user = await Amplify.Auth.getCurrentUser();
     currentUser(user);
   }
+
+  Future<String> fetchAccessToken() async {
+    final cognitoPlugin = Amplify.Auth.getPlugin(AmplifyAuthCognito.pluginKey);
+    final result = await cognitoPlugin.fetchAuthSession();
+    return result.userPoolTokensResult.value.accessToken.toJson();
+  }
+
+  Future<String> fetchRefreshToken() async {
+    final cognitoPlugin = Amplify.Auth.getPlugin(AmplifyAuthCognito.pluginKey);
+    final result = await cognitoPlugin.fetchAuthSession();
+    return result.userPoolTokensResult.value.refreshToken;
+  }
+
+  Future<bool> logout() async {
+    bool isSuccess = false;
+    try {
+      await Amplify.Auth.signOut();
+      isSuccess = true;
+    } catch (e) {
+      isSuccess = false;
+    }
+    return isSuccess;
+  }
 }

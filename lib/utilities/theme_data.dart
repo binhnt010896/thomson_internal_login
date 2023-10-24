@@ -117,6 +117,7 @@ class ThemeColors {
 final themeColor = ThemeColors();
 
 ThemeData lightTheme = ThemeData(
+  fontFamily: 'Figtree',
   colorScheme: ColorScheme(
     primary: themeColor.primary,
     brightness: Brightness.light,
