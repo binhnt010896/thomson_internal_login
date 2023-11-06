@@ -1,19 +1,34 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/utils.dart';
+import 'package:thomson_internal_login/controllers/login_controller.dart';
 import 'package:thomson_internal_login/utilities/consts.dart';
 import 'package:thomson_internal_login/utilities/images.dart';
+import 'package:thomson_internal_login/utilities/local_storage.dart';
 import 'package:thomson_internal_login/utilities/text_styles.dart';
 import 'package:thomson_internal_login/widgets/login_button.dart';
 
 class LoginScreen extends StatefulWidget {
-  const LoginScreen({Key? key}) : super(key: key);
+  final String? redirectUrl;
+  final bool isFromInternalApp;
+  const LoginScreen({Key? key, this.redirectUrl, this.isFromInternalApp = false}) : super(key: key);
 
   @override
   State<LoginScreen> createState() => _LoginScreenState();
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  LoginController controller = Get.put(LoginController());
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
+      if (widget.redirectUrl != null) {
+        await local.saveString(REDIRECT_URL, widget.redirectUrl!);
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -36,33 +51,43 @@ class _LoginScreenState extends State<LoginScreen> {
             Text('Thomson Employee\nService Portal',
                 style: TextStyles.headlineM, textAlign: isPCView ? TextAlign.start : TextAlign.center),
             const SizedBox(height: 24),
-            const LoginButton()
+            LoginButton(
+              redirectUrl: widget.redirectUrl,
+              isFromInternalApp: widget.isFromInternalApp
+            )
           ],
         ),
       )
     ];
     return Scaffold(
-      body: Center(
-        child: Container(
-          padding: const EdgeInsets.all(24),
-          child: isPCView
-              ? Row(
-            children: [
-              for (Widget section in sections)
-                Expanded(
-                  child: section,
-                )
-            ],
-          ) : Column(
-            children: [
-              for (Widget section in sections)
-                Expanded(
-                  child: section,
-                )
-            ],
+      body: Obx(() {
+        if (controller.isLoading.isTrue) {
+          return const Center(
+            child: CircularProgressIndicator.adaptive(),
+          );
+        }
+        return Center(
+          child: Container(
+            padding: const EdgeInsets.all(24),
+            child: isPCView
+                ? Row(
+              children: [
+                for (Widget section in sections)
+                  Expanded(
+                    child: section,
+                  )
+              ],
+            ) : Column(
+              children: [
+                for (Widget section in sections)
+                  Expanded(
+                    child: section,
+                  )
+              ],
+            ),
           ),
-        ),
-      ),
+        );
+      }),
     );
   }
 }

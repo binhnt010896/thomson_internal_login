@@ -7,6 +7,7 @@ import 'package:responsive_framework/breakpoint.dart';
 import 'package:responsive_framework/responsive_breakpoints.dart';
 import 'package:thomson_internal_login/screen_router.dart';
 import 'package:thomson_internal_login/utilities/consts.dart';
+import 'package:thomson_internal_login/utilities/local_storage.dart';
 import 'package:thomson_internal_login/utilities/theme_data.dart';
 import 'package:url_strategy/url_strategy.dart';
 
@@ -24,6 +25,9 @@ void main() async {
 
   /// go_router update URL
   GoRouter.optionURLReflectsImperativeAPIs = true;
+
+  /// init local storage
+  await local.init();
 
   _configureAmplify();
   runApp(const MyApp());

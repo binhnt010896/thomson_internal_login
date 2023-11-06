@@ -3,9 +3,12 @@ import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 import 'package:thomson_internal_login/controllers/login_controller.dart';
 import 'package:thomson_internal_login/screen_router.dart';
+import 'package:thomson_internal_login/utilities/local_storage.dart';
+import 'dart:html' as html;
 
 class LogoutScreen extends StatefulWidget {
-  const LogoutScreen({Key? key}) : super(key: key);
+  final String? redirectUrl;
+  const LogoutScreen({Key? key, this.redirectUrl}) : super(key: key);
 
   @override
   State<LogoutScreen> createState() => _LogoutScreenState();
@@ -18,10 +21,16 @@ class _LogoutScreenState extends State<LogoutScreen> {
   @override
   void initState() {
     super.initState();
-    controller.logout().then((isSuccess) {
-      if (isSuccess) {
-        context.pushReplacement(Routes.LOGIN);
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
+      if (widget.redirectUrl != null) {
+        await local.saveString(REDIRECT_URL, widget.redirectUrl!);
       }
+      await controller.logout().then((isSuccess) {
+        if (isSuccess) {
+          String url = local.getString(REDIRECT_URL);
+          html.window.open(url, "_self");
+        }
+      });
     });
   }
 

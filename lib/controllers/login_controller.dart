@@ -1,7 +1,12 @@
+import 'dart:convert';
+
 import 'package:amplify_auth_cognito/amplify_auth_cognito.dart';
 import 'package:amplify_flutter/amplify_flutter.dart';
+import 'package:encrypt/encrypt.dart' as ec;
+import 'package:crypto/crypto.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
+import 'package:thomson_internal_login/utilities/consts.dart';
 import 'package:thomson_internal_login/utilities/utilities.dart';
 
 class LoginController extends GetxController {
@@ -49,16 +54,27 @@ class LoginController extends GetxController {
     currentUser(user);
   }
 
-  Future<String> fetchAccessToken() async {
+  Future<Map<String, dynamic>> fetchTokens() async {
     final cognitoPlugin = Amplify.Auth.getPlugin(AmplifyAuthCognito.pluginKey);
     final result = await cognitoPlugin.fetchAuthSession();
-    return result.userPoolTokensResult.value.accessToken.toJson();
-  }
+    String accessToken = result.userPoolTokensResult.value.accessToken.toJson();
+    String refreshToken = result.userPoolTokensResult.value.refreshToken;
+    String idToken = result.userPoolTokensResult.value.idToken.toJson();
 
-  Future<String> fetchRefreshToken() async {
-    final cognitoPlugin = Amplify.Auth.getPlugin(AmplifyAuthCognito.pluginKey);
-    final result = await cognitoPlugin.fetchAuthSession();
-    return result.userPoolTokensResult.value.refreshToken;
+    /// Encrypt tokens
+    ec.Encrypter encrypter = ec.Encrypter(ec.AES(ec.Key.fromUtf8(ENCRYPTION_SECRET_KEY), mode: ec.AESMode.cbc));
+    ec.Encrypted encrypted = encrypter.encrypt(json.encode({
+      'access_token': accessToken,
+      'refresh_token': refreshToken,
+      'id_token': idToken
+    }), iv: ec.IV.fromUtf8(ENCRYPTION_SECRET_IV));
+    Hmac hmacSha256 = Hmac(sha256, utf8.encode(MAC_SECRET_KEY));
+    Digest digest = hmacSha256.convert(encrypted.bytes);
+
+    return {
+      'digest': Uri.encodeComponent(base64Encode(digest.bytes)),
+      'token': Uri.encodeComponent(encrypted.base64)
+    };
   }
 
   Future<bool> logout() async {
